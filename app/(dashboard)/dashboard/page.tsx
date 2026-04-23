@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/supabase/server'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Users, Briefcase, MessageSquare, TrendingUp } from 'lucide-react'
-import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users, Briefcase, MessageSquare, TrendingUp } from 'lucide-react';
+import Link from 'next/link';
 
 export default async function DashboardPage() {
   const supabase = await createClient()

@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Users, Brain, MessageSquare, ArrowRight, CheckCircle } from 'lucide-react'
+import Link from 'next/link';
+import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Users, Brain, MessageSquare, ArrowRight, CheckCircle } from 'lucide-react';
 
 export default async function HomePage() {
   const supabase = await createClient()

@@ -1,13 +1,7 @@
-"use server"
-
-import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import OpenAI from "openai"
-
-const client = new OpenAI({
-  apiKey: process.env.MOONSHOT_API_KEY,
-  baseURL: "https://api.moonshot.cn/v1",
-})
+"use server";
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import OpenAI from "openai";
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +17,12 @@ export async function POST(request: NextRequest) {
         error: "AI 服務尚未設定，請在環境變數中設定 MOONSHOT_API_KEY" 
       }, { status: 500 })
     }
+
+    // Instantiate client inside handler so missing key doesn't crash at build time
+    const client = new OpenAI({
+      apiKey: process.env.MOONSHOT_API_KEY,
+      baseURL: "https://api.moonshot.cn/v1",
+    })
 
     const { candidateId, positionId, resumeText, jobDescription } = await request.json()
 

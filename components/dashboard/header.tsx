@@ -1,17 +1,16 @@
-'use client'
-
-import { useRouter, usePathname } from 'next/navigation'
-import type { User } from '@supabase/supabase-js'
-import { createClient } from '@/lib/supabase/client'
-import { Button } from '@/components/ui/button'
+'use client';
+import { useRouter, usePathname } from 'next/navigation';
+import type { User } from '@supabase/supabase-js';
+import { createClient } from '@/lib/supabase/client';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { LogOut, Settings, User as UserIcon } from 'lucide-react'
+} from '@/components/ui/dropdown-menu';
+import { LogOut, Settings, User as UserIcon } from 'lucide-react';
 
 const pageTitles: Record<string, string> = {
   '/dashboard': '總覽',

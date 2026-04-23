@@ -1,26 +1,25 @@
-'use client'
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Spinner } from '@/components/ui/spinner'
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
-import { Badge } from '@/components/ui/badge'
-import { X, Plus, AlertCircle } from 'lucide-react'
-import type { Candidate, CandidateStatus, CandidateSource } from '@/lib/types/database'
-import { STATUS_LABELS, SOURCE_LABELS } from '@/lib/types/database'
+} from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Badge } from '@/components/ui/badge';
+import { X, Plus, AlertCircle } from 'lucide-react';
+import type { Candidate, CandidateStatus, CandidateSource } from '@/lib/types/database';
+import { STATUS_LABELS, SOURCE_LABELS } from '@/lib/types/database';
 
 interface CandidateFormProps {
   candidate?: Candidate

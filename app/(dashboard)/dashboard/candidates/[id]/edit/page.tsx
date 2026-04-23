@@ -1,10 +1,10 @@
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
-import { CandidateForm } from '@/components/candidates/candidate-form'
-import { Button } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
-import type { Candidate } from '@/lib/types/database'
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { createClient } from '@/lib/supabase/server';
+import { CandidateForm } from '@/components/candidates/candidate-form';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import type { Candidate } from '@/lib/types/database';
 
 interface PageProps {
   params: Promise<{ id: string }>

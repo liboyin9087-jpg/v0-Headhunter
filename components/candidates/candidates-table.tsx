@@ -1,17 +1,16 @@
-'use client'
-
-import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+'use client';
+import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/components/ui/select';
 import {
   Table,
   TableBody,
@@ -19,10 +18,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
-import { Empty } from '@/components/ui/empty'
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { Empty } from '@/components/ui/empty';
 import { 
   Search, 
   Users, 
@@ -31,17 +30,17 @@ import {
   Eye,
   Edit,
   Trash2
-} from 'lucide-react'
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import type { Candidate, CandidateStatus, CandidateSource } from '@/lib/types/database'
-import { STATUS_LABELS, STATUS_COLORS, SOURCE_LABELS } from '@/lib/types/database'
-import { createClient } from '@/lib/supabase/client'
+} from '@/components/ui/dropdown-menu';
+import type { Candidate, CandidateStatus, CandidateSource } from '@/lib/types/database';
+import { STATUS_LABELS, STATUS_COLORS, SOURCE_LABELS } from '@/lib/types/database';
+import { createClient } from '@/lib/supabase/client';
 
 interface CandidatesTableProps {
   candidates: Candidate[]
