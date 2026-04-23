@@ -1,12 +1,11 @@
-'use client'
-
-import { useState, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { createClient } from '@/lib/supabase/client'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Spinner } from '@/components/ui/spinner'
+'use client';
+import { useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { createClient } from '@/lib/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
 import { 
   ArrowLeft, 
   Upload, 
@@ -14,7 +13,7 @@ import {
   CheckCircle, 
   AlertCircle,
   Download
-} from 'lucide-react'
+} from 'lucide-react';
 
 interface ParsedCandidate {
   name: string

@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/supabase/server'
-import { CandidatesTable } from '@/components/candidates/candidates-table'
-import { CandidatesHeader } from '@/components/candidates/candidates-header'
-import type { Candidate } from '@/lib/types/database'
+import { createClient } from '@/lib/supabase/server';
+import { CandidatesTable } from '@/components/candidates/candidates-table';
+import { CandidatesHeader } from '@/components/candidates/candidates-header';
+import type { Candidate } from '@/lib/types/database';
 
 interface PageProps {
   searchParams: Promise<{

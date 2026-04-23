@@ -1,9 +1,9 @@
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { createClient } from '@/lib/supabase/server';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { 
   ArrowLeft, 
   Edit, 
@@ -15,9 +15,9 @@ import {
   ExternalLink,
   Calendar,
   Brain
-} from 'lucide-react'
-import type { Candidate } from '@/lib/types/database'
-import { STATUS_LABELS, STATUS_COLORS, SOURCE_LABELS } from '@/lib/types/database'
+} from 'lucide-react';
+import type { Candidate } from '@/lib/types/database';
+import { STATUS_LABELS, STATUS_COLORS, SOURCE_LABELS } from '@/lib/types/database';
 
 interface PageProps {
   params: Promise<{ id: string }>

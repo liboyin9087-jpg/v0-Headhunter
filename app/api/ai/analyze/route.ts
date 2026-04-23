@@ -1,8 +1,7 @@
-"use server"
-
-import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import OpenAI from "openai"
+"use server";
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import OpenAI from "openai";
 
 const client = new OpenAI({
   apiKey: process.env.MOONSHOT_API_KEY,

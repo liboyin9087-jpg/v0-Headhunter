@@ -1,7 +1,7 @@
-import { CandidateForm } from '@/components/candidates/candidate-form'
-import { Button } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
-import Link from 'next/link'
+import { CandidateForm } from '@/components/candidates/candidate-form';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export default function NewCandidatePage() {
   return (

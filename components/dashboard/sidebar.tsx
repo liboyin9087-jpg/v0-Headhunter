@@ -1,9 +1,8 @@
-'use client'
-
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import type { User } from '@supabase/supabase-js'
-import { cn } from '@/lib/utils'
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import type { User } from '@supabase/supabase-js';
+import { cn } from '@/lib/utils';
 import { 
   Users, 
   Briefcase, 
@@ -12,9 +11,9 @@ import {
   Brain,
   Menu,
   X
-} from 'lucide-react'
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+} from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 const navItems = [
   { href: '/dashboard', label: '總覽', icon: LayoutDashboard },

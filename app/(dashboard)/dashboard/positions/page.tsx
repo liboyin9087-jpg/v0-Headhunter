@@ -1,18 +1,17 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Spinner } from "@/components/ui/spinner"
-import { Building2, Edit, MapPin, MoreVertical, Plus, Trash2, Briefcase, DollarSign, CheckCircle, Clock, Pause } from "lucide-react"
-import type { JobPosition } from "@/lib/types/database"
+"use client";
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Spinner } from "@/components/ui/spinner";
+import { Building2, Edit, MapPin, MoreVertical, Plus, Trash2, Briefcase, DollarSign, CheckCircle, Clock, Pause } from "lucide-react";
+import type { JobPosition } from "@/lib/types/database";
 
 const STATUS_CONFIG = {
   open: { label: "招募中", variant: "default" as const, icon: CheckCircle },

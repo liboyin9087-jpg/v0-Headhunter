@@ -1,8 +1,7 @@
-'use client'
-
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Plus, Upload } from 'lucide-react'
+'use client';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Plus, Upload } from 'lucide-react';
 
 export function CandidatesHeader() {
   return (
