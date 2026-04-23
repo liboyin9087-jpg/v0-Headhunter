@@ -21,16 +21,16 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
-import { Empty } from '@/components/ui/empty'
-import { 
-  Search, 
-  Users, 
+import {
+  Search,
+  Users,
   ExternalLink,
   MoreHorizontal,
   Eye,
   Edit,
-  Trash2
+  Trash2,
+  X,
+  Plus,
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -50,11 +50,11 @@ interface CandidatesTableProps {
   initialSource?: string
 }
 
-export function CandidatesTable({ 
-  candidates, 
+export function CandidatesTable({
+  candidates,
   initialSearch = '',
   initialStatus = 'all',
-  initialSource = 'all'
+  initialSource = 'all',
 }: CandidatesTableProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -62,128 +62,168 @@ export function CandidatesTable({
   const [status, setStatus] = useState(initialStatus)
   const [source, setSource] = useState(initialSource)
 
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString())
-    
-    if (search) {
-      params.set('search', search)
-    } else {
-      params.delete('search')
-    }
-    
-    if (status && status !== 'all') {
-      params.set('status', status)
-    } else {
-      params.delete('status')
-    }
-    
-    if (source && source !== 'all') {
-      params.set('source', source)
-    } else {
-      params.delete('source')
-    }
+  const applyFilters = (override?: { search?: string; status?: string; source?: string }) => {
+    const next = new URLSearchParams(searchParams.toString())
+    const s = override?.search ?? search
+    const st = override?.status ?? status
+    const sr = override?.source ?? source
 
-    router.push(`/dashboard/candidates?${params.toString()}`)
+    if (s) next.set('search', s)
+    else next.delete('search')
+    if (st && st !== 'all') next.set('status', st)
+    else next.delete('status')
+    if (sr && sr !== 'all') next.set('source', sr)
+    else next.delete('source')
+
+    router.push(`/dashboard/candidates?${next.toString()}`)
   }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('確定要刪除此候選人嗎？此操作無法復原。')) return
-    
+  const resetFilters = () => {
+    setSearch('')
+    setStatus('all')
+    setSource('all')
+    router.push('/dashboard/candidates')
+  }
+
+  const hasFilters = Boolean(search) || status !== 'all' || source !== 'all'
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`確定要刪除候選人「${name}」嗎？此操作無法復原。`)) return
+
     const supabase = createClient()
     const { error } = await supabase.from('candidates').delete().eq('id', id)
-    
+
     if (error) {
       alert('刪除失敗：' + error.message)
       return
     }
-    
+
     router.refresh()
   }
 
   return (
     <div className="space-y-4">
-      {/* Filters */}
-      <Card className="p-4">
-        <div className="flex flex-col gap-4 sm:flex-row">
+      {/* Toolbar */}
+      <div className="rounded-xl border border-border bg-white p-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="搜尋姓名、公司、職稱..."
+              placeholder="搜尋姓名、Email、公司、職稱..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              className="pl-10"
+              onKeyDown={(e) => e.key === 'Enter' && applyFilters()}
+              className="pl-9 bg-slate-50 border-slate-200 focus-visible:bg-white"
             />
           </div>
-          <Select value={status} onValueChange={setStatus}>
-            <SelectTrigger className="w-full sm:w-40">
-              <SelectValue placeholder="狀態" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">所有狀態</SelectItem>
-              {(Object.entries(STATUS_LABELS) as [CandidateStatus, string][]).map(([value, label]) => (
-                <SelectItem key={value} value={value}>{label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={source} onValueChange={setSource}>
-            <SelectTrigger className="w-full sm:w-40">
-              <SelectValue placeholder="來源" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">所有來源</SelectItem>
-              {(Object.entries(SOURCE_LABELS) as [CandidateSource, string][]).map(([value, label]) => (
-                <SelectItem key={value} value={value}>{label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Button onClick={handleSearch}>搜尋</Button>
+          <div className="flex gap-2">
+            <Select
+              value={status}
+              onValueChange={(v) => {
+                setStatus(v)
+                applyFilters({ status: v })
+              }}
+            >
+              <SelectTrigger className="w-full sm:w-36 border-slate-200">
+                <SelectValue placeholder="狀態" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">所有狀態</SelectItem>
+                {(Object.entries(STATUS_LABELS) as [CandidateStatus, string][]).map(([value, label]) => (
+                  <SelectItem key={value} value={value}>{label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select
+              value={source}
+              onValueChange={(v) => {
+                setSource(v)
+                applyFilters({ source: v })
+              }}
+            >
+              <SelectTrigger className="w-full sm:w-36 border-slate-200">
+                <SelectValue placeholder="來源" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">所有來源</SelectItem>
+                {(Object.entries(SOURCE_LABELS) as [CandidateSource, string][]).map(([value, label]) => (
+                  <SelectItem key={value} value={value}>{label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button onClick={() => applyFilters()} className="shrink-0">
+              搜尋
+            </Button>
+            {hasFilters && (
+              <Button variant="ghost" onClick={resetFilters} className="shrink-0">
+                <X className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
         </div>
-      </Card>
+      </div>
 
-      {/* Table */}
+      {/* Count */}
+      <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <span>共 <span className="font-semibold text-foreground">{candidates.length}</span> 位候選人</span>
+      </div>
+
+      {/* Empty state */}
       {candidates.length === 0 ? (
-        <Empty
-          icon={Users}
-          title="尚無候選人資料"
-          description="開始新增候選人或匯入 CSV 檔案"
-          action={
-            <Link href="/dashboard/candidates/new">
-              <Button>新增候選人</Button>
-            </Link>
-          }
-        />
+        <div className="rounded-xl border border-dashed border-border bg-white py-16 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 ring-1 ring-blue-100 text-primary">
+            <Users className="h-7 w-7" />
+          </div>
+          <h3 className="mt-4 text-base font-semibold">
+            {hasFilters ? '找不到符合條件的候選人' : '尚無候選人資料'}
+          </h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {hasFilters ? '試試調整篩選條件或清除所有篩選' : '新增第一位候選人開始建立你的人才庫'}
+          </p>
+          <div className="mt-5 flex justify-center gap-2">
+            {hasFilters ? (
+              <Button variant="outline" onClick={resetFilters}>清除篩選</Button>
+            ) : (
+              <Link href="/dashboard/candidates/new">
+                <Button>
+                  <Plus className="mr-1.5 h-4 w-4" />
+                  新增候選人
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
       ) : (
-        <Card>
+        <div className="rounded-xl border border-border bg-white overflow-hidden">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>姓名</TableHead>
-                  <TableHead className="hidden sm:table-cell">公司 / 職稱</TableHead>
-                  <TableHead className="hidden md:table-cell">技能</TableHead>
-                  <TableHead>狀態</TableHead>
-                  <TableHead className="hidden lg:table-cell">來源</TableHead>
+                <TableRow className="bg-slate-50/60 hover:bg-slate-50/60 border-border">
+                  <TableHead className="text-xs font-semibold text-slate-600">姓名</TableHead>
+                  <TableHead className="hidden sm:table-cell text-xs font-semibold text-slate-600">公司 / 職稱</TableHead>
+                  <TableHead className="hidden md:table-cell text-xs font-semibold text-slate-600">技能</TableHead>
+                  <TableHead className="text-xs font-semibold text-slate-600">狀態</TableHead>
+                  <TableHead className="hidden lg:table-cell text-xs font-semibold text-slate-600">來源</TableHead>
                   <TableHead className="w-12"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {candidates.map((candidate) => (
-                  <TableRow key={candidate.id}>
+                  <TableRow key={candidate.id} className="border-border hover:bg-slate-50/60">
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-medium">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50 text-primary font-semibold text-sm ring-1 ring-blue-100">
                           {candidate.name.charAt(0)}
                         </div>
                         <div className="min-w-0">
-                          <Link 
+                          <Link
                             href={`/dashboard/candidates/${candidate.id}`}
-                            className="font-medium hover:text-primary hover:underline"
+                            className="font-medium hover:text-primary"
                           >
                             {candidate.name}
                           </Link>
                           {candidate.email && (
-                            <p className="text-sm text-muted-foreground truncate">
+                            <p className="text-xs text-muted-foreground truncate">
                               {candidate.email}
                             </p>
                           )}
@@ -192,28 +232,32 @@ export function CandidatesTable({
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <div className="max-w-48">
-                        <p className="font-medium truncate">{candidate.current_title || '-'}</p>
-                        <p className="text-sm text-muted-foreground truncate">
-                          {candidate.current_company || '-'}
+                        <p className="text-sm font-medium truncate">{candidate.current_title || '—'}</p>
+                        <p className="text-xs text-muted-foreground truncate">
+                          {candidate.current_company || '—'}
                         </p>
                       </div>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       <div className="flex flex-wrap gap-1 max-w-48">
                         {candidate.skills.slice(0, 3).map((skill) => (
-                          <Badge key={skill} variant="secondary" className="text-xs">
+                          <Badge
+                            key={skill}
+                            variant="secondary"
+                            className="text-[11px] h-5 font-normal bg-slate-100 text-slate-700 border-0"
+                          >
                             {skill}
                           </Badge>
                         ))}
                         {candidate.skills.length > 3 && (
-                          <Badge variant="outline" className="text-xs">
+                          <Badge variant="outline" className="text-[11px] h-5 font-normal">
                             +{candidate.skills.length - 3}
                           </Badge>
                         )}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge className={STATUS_COLORS[candidate.status]}>
+                      <Badge className={`${STATUS_COLORS[candidate.status]} text-xs font-medium`}>
                         {STATUS_LABELS[candidate.status]}
                       </Badge>
                     </TableCell>
@@ -252,8 +296,8 @@ export function CandidatesTable({
                             </DropdownMenuItem>
                           )}
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem 
-                            onClick={() => handleDelete(candidate.id)}
+                          <DropdownMenuItem
+                            onClick={() => handleDelete(candidate.id, candidate.name)}
                             className="text-destructive focus:text-destructive"
                           >
                             <Trash2 className="mr-2 h-4 w-4" />
@@ -267,7 +311,7 @@ export function CandidatesTable({
               </TableBody>
             </Table>
           </div>
-        </Card>
+        </div>
       )}
     </div>
   )

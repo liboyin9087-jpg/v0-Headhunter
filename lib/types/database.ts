@@ -98,12 +98,21 @@ export const STATUS_LABELS: Record<CandidateStatus, string> = {
 }
 
 export const STATUS_COLORS: Record<CandidateStatus, string> = {
-  new: 'bg-blue-100 text-blue-800',
-  contacted: 'bg-yellow-100 text-yellow-800',
-  interviewing: 'bg-purple-100 text-purple-800',
-  offered: 'bg-orange-100 text-orange-800',
-  placed: 'bg-green-100 text-green-800',
-  rejected: 'bg-red-100 text-red-800'
+  new: 'bg-blue-50 text-blue-700 border border-blue-200',
+  contacted: 'bg-sky-50 text-sky-700 border border-sky-200',
+  interviewing: 'bg-indigo-50 text-indigo-700 border border-indigo-200',
+  offered: 'bg-amber-50 text-amber-700 border border-amber-200',
+  placed: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+  rejected: 'bg-slate-100 text-slate-600 border border-slate-200'
+}
+
+export const STATUS_DOT_COLORS: Record<CandidateStatus, string> = {
+  new: 'bg-blue-500',
+  contacted: 'bg-sky-500',
+  interviewing: 'bg-indigo-500',
+  offered: 'bg-amber-500',
+  placed: 'bg-emerald-500',
+  rejected: 'bg-slate-400'
 }
 
 export const SOURCE_LABELS: Record<CandidateSource, string> = {

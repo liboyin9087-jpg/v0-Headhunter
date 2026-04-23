@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { CandidateForm } from '@/components/candidates/candidate-form'
-import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import type { Candidate } from '@/lib/types/database'
 
@@ -26,18 +25,17 @@ export default async function EditCandidatePage({ params }: PageProps) {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div className="flex items-center gap-4">
-        <Link href={`/dashboard/candidates/${id}`}>
-          <Button variant="ghost" size="icon">
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        </Link>
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">編輯候選人</h2>
-          <p className="text-muted-foreground">{candidate.name}</p>
-        </div>
+      <Link
+        href={`/dashboard/candidates/${id}`}
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        返回候選人詳情
+      </Link>
+      <div>
+        <h2 className="text-xl font-semibold tracking-tight">編輯候選人</h2>
+        <p className="text-sm text-muted-foreground mt-1">{candidate.name}</p>
       </div>
-
       <CandidateForm candidate={candidate as Candidate} mode="edit" />
     </div>
   )

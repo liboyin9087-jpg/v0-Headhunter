@@ -162,16 +162,16 @@ export default function ImportCandidatesPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard/candidates">
-          <Button variant="ghost" size="icon">
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        </Link>
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">匯入候選人</h2>
-          <p className="text-muted-foreground">上傳 CSV 檔案批次匯入候選人資料</p>
-        </div>
+      <Link
+        href="/dashboard/candidates"
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        返回人才庫
+      </Link>
+      <div>
+        <h2 className="text-xl font-semibold tracking-tight">批次匯入候選人</h2>
+        <p className="text-sm text-muted-foreground mt-1">上傳 CSV 檔案一次建立多位候選人</p>
       </div>
 
       {success ? (
